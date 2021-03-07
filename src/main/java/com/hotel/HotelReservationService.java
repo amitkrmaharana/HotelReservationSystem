@@ -43,7 +43,7 @@ public class HotelReservationService {
         int weekEndsCount = countWeekEnds(firstDate, lastDate);
         hotelList.stream().map(p -> {p.setRateForRewardCustomer(weekDaysCount,weekEndsCount); return p.getTotalRewardCustomerRate(); }).collect(Collectors.toList());
     }
-    //Returns list of Hotels which has the least rates for a given range of dates with the best ratings.
+    //Returns list of Hotels which has the least rates for a given range of Dates with the best ratings.
     public Hotel findCheapestAndBestHotel(String firstDate, String lastDate) {
         calculateRate(firstDate,lastDate);
         Hotel cheapestHotel =  hotelList.stream().min(Comparator.comparing(Hotel::getTotalRewardCustomerRate)).orElseThrow(NoSuchElementException::new);
