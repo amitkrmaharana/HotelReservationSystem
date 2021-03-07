@@ -23,8 +23,9 @@ public class Hotel {
         this.totalRate = this.weekDayRate + this.weekEndRate;
     }
     //Returns the sum of Total weekDayrate and total weekDayrate to the comparator to compare.
-    public int getRate() {
-        return this.weekDayRate + this.weekEndRate;
+
+    public int getRatings() {
+        return ratings;
     }
 
     public int getTotalRate() {

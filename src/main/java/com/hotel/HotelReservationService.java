@@ -37,16 +37,17 @@ public class HotelReservationService {
         int days = (int) ChronoUnit.DAYS.between(startDate,endDate);
         return days - weekDaysCount;
     }
-    //Returns list of Hotels whioch has the least rates for a given range of dates.
-    public Hotel findCheapestHotel(String firstDate, String lastDate) {
+    //Returns list of Hotels which has the least rates for a given range of dates with the best ratings.
+    public Hotel findCheapestAndBestHotel(String firstDate, String lastDate) {
         int weekDaysCount = countWeekDays(firstDate, lastDate);
         int weekEndsCount = countWeekEnds(firstDate, lastDate);
-        hotelList.stream().map(p -> {p.setRate(weekDaysCount,weekEndsCount); return p.getRate(); }).collect(Collectors.toList());
-        Hotel cheapestHotel =  hotelList.stream().min(Comparator.comparing(Hotel::getRate)).orElseThrow(NoSuchElementException::new);
+        hotelList.stream().map(p -> {p.setRate(weekDaysCount,weekEndsCount); return p.getTotalRate(); }).collect(Collectors.toList());
+        Hotel cheapestHotel =  hotelList.stream().min(Comparator.comparing(Hotel::getTotalRate)).orElseThrow(NoSuchElementException::new);
         int cheapestRate = cheapestHotel.getTotalRate();
         Predicate<Hotel> minimum = elements -> elements.getTotalRate()==cheapestRate;
         List<Hotel> minimumRateHotelList = hotelList.stream().filter(minimum).collect(Collectors.toList());
-        minimumRateHotelList.stream().forEach(System.out::println);
-        return cheapestHotel;
+        Hotel maxRatingList = minimumRateHotelList.stream().max(Comparator.comparing(Hotel::getRatings)).orElseThrow(NoSuchElementException::new);
+        System.out.println(maxRatingList);
+        return maxRatingList;
     }
 }
