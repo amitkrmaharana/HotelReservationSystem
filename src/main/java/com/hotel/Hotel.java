@@ -5,14 +5,16 @@ public class Hotel {
     protected int totalRate;
     protected int weekDayRate;
     protected int weekEndRate;
+    protected int ratings;
     // Created constructor to add name , weekday and weekaend rates
-    public Hotel(String name, int weekDayRate, int weekEndRate) {
+    public Hotel(String name, int weekDayRate, int weekEndRate, int ratings) {
         this.name = name;
         this.weekDayRate = weekDayRate;
         this.weekEndRate = weekEndRate;
+        this.ratings = ratings;
     }
     public String toString() {
-        return "Hotel: " + name + "  TotalRate: " + totalRate;
+        return "Hotel: " + name + "  TotalRate: " + totalRate + " Ratings " + ratings;
     }
     //This provides the sum of total rate for the given range
     public void setRate(int weekDayCount,int weekEndRate){
