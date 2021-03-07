@@ -2,25 +2,37 @@ package com.hotel;
 
 public class Hotel {
     protected String name;
-    protected int totalRate;
-    protected int weekDayRate;
-    protected int weekEndRate;
+    protected int totalRewardCustomerRate;
+    protected int totalRegularCustomerRate;
+    protected int regularCustomerWeekDayRate;
+    protected int regularCustomerWeekEndRate;
+    protected int rewardCustomerWeekDayRate;
+    protected int rewardCustimerWeekEndRate;
     protected int ratings;
-    // Created constructor to add name , weekday and weekaend rates
-    public Hotel(String name, int weekDayRate, int weekEndRate, int ratings) {
+    //
+    public Hotel(String name, int regularCustomerWeekDayRate, int regularCustomerWeekEndRate, int rewardCustomerWeekDayRate, int rewardCustimerWeekEndRate, int ratings) {
         this.name = name;
-        this.weekDayRate = weekDayRate;
-        this.weekEndRate = weekEndRate;
+        this.regularCustomerWeekDayRate = regularCustomerWeekDayRate;
+        this.regularCustomerWeekEndRate = regularCustomerWeekEndRate;
+        this.rewardCustomerWeekDayRate = rewardCustomerWeekDayRate;
+        this.rewardCustimerWeekEndRate = rewardCustimerWeekEndRate;
         this.ratings = ratings;
     }
+
     public String toString() {
-        return "Hotel: " + name + "  TotalRate: " + totalRate + " Ratings " + ratings;
+        return "Hotel: " + name + " Rating: " + ratings + " TotalRewardCustomerRate: " + totalRewardCustomerRate;
     }
-    //This provides the sum of total rate for the given range
-    public void setRate(int weekDayCount,int weekEndRate){
-        this.weekDayRate = this.weekDayRate*weekDayCount;
-        this.weekEndRate = this.weekEndRate*weekEndRate;
-        this.totalRate = this.weekDayRate + this.weekEndRate;
+    //This provides the sum of total rate for the regular customer according to weekdays and weekends
+    public void setRateForRegularCustomer(int weekDayCount,int weekEndRate){
+        this.regularCustomerWeekDayRate = this.regularCustomerWeekDayRate*weekDayCount;
+        this.regularCustomerWeekEndRate = this.regularCustomerWeekEndRate*weekEndRate;
+        this.totalRegularCustomerRate = this.regularCustomerWeekDayRate + this.regularCustomerWeekEndRate;
+    }
+    //This provides the sum of total rate for the rewards customer according to weekdays and weekends
+    public void setRateForRewardCustomer(int weekDayCount,int weekEndRate) {
+        this.rewardCustomerWeekDayRate = this.rewardCustomerWeekDayRate*weekDayCount;
+        this.rewardCustimerWeekEndRate = this.rewardCustimerWeekEndRate*weekEndRate;
+        this.totalRewardCustomerRate = this.rewardCustomerWeekDayRate + this.rewardCustimerWeekEndRate;
     }
     //Returns the sum of Total weekDayrate and total weekDayrate to the comparator to compare.
 
@@ -28,7 +40,11 @@ public class Hotel {
         return ratings;
     }
 
-    public int getTotalRate() {
-        return this.totalRate;
+    public int getTotalRewardCustomerRate() {
+        return totalRewardCustomerRate;
+    }
+
+    public int getTotalRegularCustomerRate() {
+        return totalRegularCustomerRate;
     }
 }
