@@ -13,6 +13,7 @@ public class HotelReservationService {
     //Adds hotels details to the hotel list
     public void addHotel(Hotel hotel) {
         hotelList.add(hotel);
+        System.out.println(hotelList);
     }
     //Returns list of hotels
     public List<Hotel> getHotels() {
@@ -40,7 +41,7 @@ public class HotelReservationService {
     public void calculateRate(String firstDate, String lastDate) {
         int weekDaysCount = countWeekDays(firstDate, lastDate);
         int weekEndsCount = countWeekEnds(firstDate, lastDate);
-        hotelList.stream().map(p -> {p.setRate(weekDaysCount,weekEndsCount); return p.getTotalRate(); }).collect(Collectors.toList());
+        hotelList.stream().map(p -> {p.setRateForRegularCustomer(weekDaysCount,weekEndsCount); return p.getTotalRate(); }).collect(Collectors.toList());
     }
     //Returns list of Hotels which has the least rates for a given range of dates with the best ratings.
     public Hotel findCheapestAndBestHotel(String firstDate, String lastDate) {
