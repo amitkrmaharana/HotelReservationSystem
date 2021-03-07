@@ -3,7 +3,6 @@ package com.hotel;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.List;
-import java.util.Optional;
 
 public class HotelReservationTest1 {
     @Test
@@ -29,5 +28,14 @@ public class HotelReservationTest1 {
         Hotel result = hotelReservationService.findCheapestHotel(countDays);
         System.out.println(result);
         Assert.assertTrue(hotelReservationService.hotelList.contains(result));
+    }
+    @Test
+    public void givenHotel_with3Parameters_whenInvokeAddHotel_shoulBeAbleToAdd() {
+        HotelReservationService hotelReservationService = new HotelReservationService();
+        Hotel hotel = new Hotel("Lakewood", 110, 90);
+        hotelReservationService.addHotel(hotel);
+        List hotelList = hotelReservationService.getHotels();
+        System.out.println(hotelList);
+        Assert.assertTrue(hotelList.contains(hotel));
     }
 }
