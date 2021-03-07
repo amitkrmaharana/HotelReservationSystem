@@ -38,14 +38,14 @@ public class HotelReservationService {
         return days - weekDaysCount;
     }
     //To calculate the total rates for reward customers on a given date range.
-    public void calculateRate(String firstDate, String lastDate) {
+    public void calculateRewardCustomerRate(String firstDate, String lastDate) {
         int weekDaysCount = countWeekDays(firstDate, lastDate);
         int weekEndsCount = countWeekEnds(firstDate, lastDate);
         hotelList.stream().map(p -> {p.setRateForRewardCustomer(weekDaysCount,weekEndsCount); return p.getTotalRewardCustomerRate(); }).collect(Collectors.toList());
     }
-    //Returns list of Hotels which has the least rates for a given range of Dates with the best ratings.
-    public Hotel findCheapestAndBestHotel(String firstDate, String lastDate) {
-        calculateRate(firstDate,lastDate);
+    //Returns list of Hotels which has the least rates for a given range of Dates with the best ratings for reward customers.
+    public Hotel findCheapestAndBestHotelForRewardCustomer(String firstDate, String lastDate) {
+        calculateRewardCustomerRate(firstDate,lastDate);
         Hotel cheapestHotel =  hotelList.stream().min(Comparator.comparing(Hotel::getTotalRewardCustomerRate)).orElseThrow(NoSuchElementException::new);
         int cheapestRate = cheapestHotel.getTotalRewardCustomerRate();
         Predicate<Hotel> minimum = elements -> elements.getTotalRewardCustomerRate()==cheapestRate;
@@ -54,11 +54,21 @@ public class HotelReservationService {
         System.out.println(maxRatingList);
         return maxRatingList;
     }
-    //returns max rated hotellist for a given range of dates.
-    public Hotel findmaxRatedHotel(String firstDate, String lastDate) {
-        calculateRate(firstDate,lastDate);
-        Hotel maxRatingHotel =  hotelList.stream().max(Comparator.comparing(Hotel::getRatings)).orElseThrow(NoSuchElementException::new);
-        System.out.println(maxRatingHotel);
-        return maxRatingHotel;
+    //To calculate the total rates for regular customers on a given date range.
+    public void calculateRegularCustomerRate(String firstDate, String lastDate) {
+        int weekDaysCount = countWeekDays(firstDate, lastDate);
+        int weekEndsCount = countWeekEnds(firstDate, lastDate);
+        hotelList.stream().map(p -> {p.setRateForRegularCustomer(weekDaysCount,weekEndsCount); return p.getTotalRegularCustomerRate(); }).collect(Collectors.toList());
+    }
+    //Returns list of Hotels which has the least rates for a given range of Dates with the best ratings for regular customers.
+    public Hotel findCheapestAndBestHotelForRegularCustomer(String firstDate, String lastDate) {
+        calculateRegularCustomerRate(firstDate,lastDate);
+        Hotel cheapestHotel =  hotelList.stream().min(Comparator.comparing(Hotel::getTotalRegularCustomerRate)).orElseThrow(NoSuchElementException::new);
+        int cheapestRate = cheapestHotel.getTotalRegularCustomerRate();
+        Predicate<Hotel> minimum = elements -> elements.getTotalRegularCustomerRate()==cheapestRate;
+        List<Hotel> minimumRateHotelList = hotelList.stream().filter(minimum).collect(Collectors.toList());
+        Hotel maxRatingList = minimumRateHotelList.stream().max(Comparator.comparing(Hotel::getRatings)).orElseThrow(NoSuchElementException::new);
+        System.out.println(maxRatingList);
+        return maxRatingList;
     }
 }
